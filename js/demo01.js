@@ -1,29 +1,61 @@
 /*根据设计图和屏幕宽度的比例自动缩放图片和精灵图的大小*/
 var winH = window.innerHeight
 var winW = window.innerWidth
-var devicePixelRatio = window.devicePixelRatio
+
 var H5 = winH > winW
-var canH = winH * devicePixelRatio
-var canW = H5 ? winW * devicePixelRatio : winH * (640 / 1136) * devicePixelRatio;
+var canH = winH 
+var canW = H5 ? winW  : winH * (640 / 1136) ;
 
-var bl = canW /640 ;
-
+var bl = canW /640;
 
 var game = new Phaser.Game({
 	width:canW,
-	height:canH
+	height:canH,
+	canvas:$('canvas')[0]
 })
 
 game.States = {}
 
 game.States.Load = function (){
+	this.init = function(){
+		this.stage.disableVisibilityChange = true; //当页面失去焦点时动画，倒计时仍继续执行
+	}
 	this.preload = function(){
 		this.load.image('bg','./images/bg.png')
-		this.load.spritesheet('menu-logo','./images/menu-logo.png')
+		this.load.image('menu-score','./images/menu-score.png')
+		
+		this.load.spritesheet('menu-logo','./images/menu-logo.png',560,248,4)
+		this.load.spritesheet('menu-one','./images/menu-one.png',560,150,3)
+		this.load.spritesheet('menu-pk','./images/menu-pk.png',560,150,3)
+		this.load.spritesheet('menu-rank','./images/menu-rank.png',560,150,3)
+		this.load.spritesheet('menu-list','./images/menu-list.png',260,150,3)
+		this.load.spritesheet('menu-rule','./images/menu-rule.png',260,150,3)
 	}
 	this.create = function(){
 		this.add.image(0,0,'bg')
-//		addImage(40,40,'menu-logo',560,248)
+		addImage(40,40,'menu-logo',560,248).animations.add('shark').play(10,true)
+		
+		addImage(40,318,'menu-score',560,65)
+		
+		addSprite(40,407,'menu-rank',560,150,function(){
+			console.log(1)
+		})
+		
+		addSprite(40,577,'menu-pk',560,150,function(){
+			console.log(2)
+		})
+		
+		addSprite(40,747,'menu-one',560,150,function(){
+			console.log(3)
+		})
+		
+		addSprite(40,917,'menu-list',260,150,function(){
+			console.log(3)
+		})
+		
+		addSprite(340,917,'menu-rule',260,150,function(){
+			console.log(3)
+		})
 	}
 }
 
@@ -70,7 +102,7 @@ function addImage(x,y,key,w,h){
 }
 
 function addSprite(x,y,key,w,h,callback){
-	var SPRITE = game.add.spritesheet(x*bl,y*bl,key,callback,game,1,0,2)
+	var SPRITE = game.add.button(x*bl,y*bl,key,callback,game,1,0,2)
 	SPRITE.width = w*bl
 	SPRITE.height = h*bl
 	return SPRITE
