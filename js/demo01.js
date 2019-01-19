@@ -2,17 +2,38 @@
 var winH = window.innerHeight
 var winW = window.innerWidth
 
-var H5 = winH > winW
-var canH = winH 
-var canW = H5 ? winW  : winH * (640 / 1136) ;
+console.log(winH,winW)
 
-var bl = canW /640;
+
+var H5 = winH > winW
+
+var isGullScreen = winH/winW;//是否是全面屏
+
+var canH,canW,bl;
+
+
+if(isGullScreen>1.9 && H5 ){//全面屏
+	canW = winW;
+	canH = winH;
+}else if(H5 && isGullScreen < 1.9){
+	
+	canH = winH;
+	canW = canH * 640 /1136;
+}else{
+	canW = winH * 640 / 1136;
+	canH = winH;
+}
+
+bl = canW / 640;
+
 
 var game = new Phaser.Game({
 	width:canW,
 	height:canH,
 	canvas:$('canvas')[0]
 })
+
+
 
 game.States = {}
 
@@ -32,7 +53,7 @@ game.States.Load = function (){
 		this.load.spritesheet('menu-rule','./images/menu-rule.png',260,150,3)
 	}
 	this.create = function(){
-		this.add.image(0,0,'bg')
+		loadbg()//加载背景
 		addImage(40,40,'menu-logo',560,248).animations.add('shark').play(10,true)
 		
 		addImage(40,318,'menu-score',560,65)
@@ -106,4 +127,10 @@ function addSprite(x,y,key,w,h,callback){
 	SPRITE.width = w*bl
 	SPRITE.height = h*bl
 	return SPRITE
+}
+function loadbg(){
+	var bg = game.add.image(0,0,'bg')
+	bg.width = canW;
+	bg.height = canH;
+	return bg
 }
