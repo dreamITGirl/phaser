@@ -1,0 +1,34 @@
+[
+	{
+		"ranking":1,
+		"name":"赵钱孙李",
+		"score":868,
+		"questionNum":99,
+		"useTime":120,
+		"rightRadio":80
+	},
+	{
+		"ranking":2,
+		"name":"赵钱孙李",
+		"score":768,
+		"questionNum":39,
+		"useTime":110,
+		"rightRadio":80
+	},
+	{
+		"ranking":3,
+		"name":"赵钱孙李",
+		"score":668,
+		"questionNum":19,
+		"useTime":100,
+		"rightRadio":80
+	},
+	{
+		"ranking":4,
+		"name":"赵钱孙李",
+		"score":568,
+		"questionNum":20,
+		"useTime":140,
+		"rightRadio":80
+	}
+]
